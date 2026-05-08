@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BiteBase Ecosystem — Knowledge Graph</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #1e1e2e;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent: #3b82f6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; height: 100vh; }
+  #app { display: flex; height: 100vh; }
+
+  /* Sidebar */
+  #sidebar { width: 320px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
+  #sidebar-header { padding: 20px; border-bottom: 1px solid var(--border); }
+  #sidebar-header h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  #sidebar-header h1 span { color: var(--accent); }
+  #sidebar-header p { font-size: 12px; color: var(--text-muted); }
+  #stats { display: flex; gap: 12px; margin-top: 12px; }
+  .stat { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; flex: 1; text-align: center; }
+  .stat .num { font-size: 20px; font-weight: 700; color: var(--accent); }
+  .stat .lbl { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Filters */
+  #filters { padding: 16px; border-bottom: 1px solid var(--border); }
+  #filters label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
+  .filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .filter-btn { background: var(--bg); border: 1px solid var(--border); color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+  .filter-btn:hover { border-color: var(--accent); color: var(--text); }
+  .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+  /* Legend */
+  #legend { padding: 16px; border-bottom: 1px solid var(--border); }
+  #legend h3 { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; cursor: pointer; font-size: 12px; transition: opacity 0.15s; }
+  .legend-item:hover { opacity: 0.8; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+  .legend-count { margin-left: auto; color: var(--text-muted); font-size: 11px; }
+
+  /* Repo list */
+  #repo-list { flex: 1; overflow-y: auto; padding: 8px; }
+  .repo-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 6px; cursor: pointer; transition: all 0.15s; }
+  .repo-card:hover { border-color: var(--accent); }
+  .repo-card.active { border-color: var(--accent); background: rgba(59,130,246,0.08); }
+  .repo-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .repo-card .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+  .tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: rgba(59,130,246,0.15); color: #93c5fd; }
+  .tag.layer { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+  .tag.maturity { background: rgba(245,158,11,0.15); color: #fcd34d; }
+  .repo-card .desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+  .repo-card .fws { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+
+  /* Graph area */
+  #graph-area { flex: 1; position: relative; }
+  #graph { width: 100%; height: 100%; }
+  .node { cursor: pointer; transition: opacity 0.2s; }
+  .node.dimmed { opacity: 0.15; }
+  .node.highlighted { opacity: 1; }
+  .link { stroke-opacity: 0.4; transition: stroke-opacity 0.2s; }
+  .link.dimmed { stroke-opacity: 0.05; }
+  .link.highlighted { stroke-opacity: 1; }
+  .node-label { font-size: 10px; fill: var(--text-muted); pointer-events: none; text-anchor: middle; }
+  .node-label.highlighted { fill: var(--text); font-weight: 600; font-size: 11px; }
+
+  /* Tooltip */
+  #tooltip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 12px; max-width: 280px; opacity: 0; transition: opacity 0.15s; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+  #tooltip.visible { opacity: 1; }
+  #tooltip h4 { font-size: 13px; margin-bottom: 6px; }
+  #tooltip .tt-meta { color: var(--text-muted); margin-bottom: 4px; }
+  #tooltip .tt-desc { color: var(--text); line-height: 1.4; }
+  #tooltip .tt-fws { margin-top: 6px; color: var(--text-muted); font-size: 11px; }
+
+  /* Controls */
+  #controls { position: absolute; top: 16px; right: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .ctrl-btn { width: 36px; height: 36px; border-radius: 8px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .ctrl-btn:hover { border-color: var(--accent); }
+
+  /* Search */
+  #search-box { padding: 16px; border-bottom: 1px solid var(--border); }
+  #search-box input { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: var(--text); font-size: 12px; outline: none; }
+  #search-box input:focus { border-color: var(--accent); }
+  #search-box input::placeholder { color: var(--text-muted); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="sidebar">
+    <div id="sidebar-header">
+      <h1><span>BiteBase</span> Ecosystem</h1>
+      <p>Knowledge Graph for Full Stack Development</p>
+      <div id="stats"></div>
+    </div>
+    <div id="search-box">
+      <input type="text" id="search" placeholder="Search repos..." />
+    </div>
+    <div id="filters"></div>
+    <div id="legend"></div>
+    <div id="repo-list"></div>
+  </div>
+  <div id="graph-area">
+    <svg id="graph"></svg>
+    <div id="tooltip"></div>
+    <div id="controls">
+      <button class="ctrl-btn" id="zoom-in" title="Zoom In">+</button>
+      <button class="ctrl-btn" id="zoom-out" title="Zoom Out">−</button>
+      <button class="ctrl-btn" id="zoom-fit" title="Fit">⊡</button>
+      <button class="ctrl-btn" id="toggle-labels" title="Toggle Labels">A</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA (embedded from knowledge-graph-compact.json) ──
+const GRAPH_DATA = {"nodes":[{"id":"BiteBase-Intelligence-R1","label":"BiteBase-Intelligence-R1","category":"intelligence","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"iteration"},{"id":"Bitebase-Agentic-AI-Infrastructure","label":"Bitebase-Agentic-AI-Infrastructure","category":"ai-agent","layer":"ai-service","stack":["TypeScript/JavaScript"],"frameworks":["CopilotKit"],"description":"","maturity":"active"},{"id":"_authenticationAPI.BiteBase.app","label":"_authenticationAPI.BiteBase.app","category":"backend-api","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"active"},{"id":"agentic-ai-agent.bitebase.app","label":"agentic-ai-agent.bitebase.app","category":"ai-agent","layer":"ai-service","stack":["Python"],"frameworks":["LangChain","OpenAI","Pandas"],"description":"","maturity":"active"},{"id":"agentic-workflows.bitebase.app","label":"agentic-workflows.bitebase.app","category":"ai-agent","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"active"},{"id":"beta-bitebase","label":"beta-bitebase","category":"prototype","layer":"frontend","stack":["TypeScript/JavaScript"],"frameworks":["Next.js","Mapbox","Turborepo"],"description":"","maturity":"experimental"},{"id":"beta-bitebase-app","label":"beta-bitebase-app","category":"intelligence","layer":"frontend","stack":["TypeScript/JavaScript"],"frameworks":["Next.js","React","Tailwind CSS","Radix UI","Leaflet","Mapbox","D3.js","Recharts","Zustand","TanStack"],"description":"BiteBase Frontend - Enterprise Restaurant Intelligence Platform","maturity":"experimental"},{"id":"beta-bitebase-app-r1","label":"beta-bitebase-app-r1","category":"intelligence","layer":"frontend","stack":["TypeScript/JavaScript"],"frameworks":["Next.js","React","Tailwind CSS","Radix UI","Mapbox","D3.js","Recharts","TanStack"],"description":"BiteBase AI-Powered Restaurant Intelligence Platform - Production Frontend","maturity":"experimental"},{"id":"bitebase-agent-","label":"bitebase-agent-","category":"ai-agent","layer":"frontend","stack":["TypeScript/JavaScript"],"frameworks":["React","Vite"],"description":"","maturity":"active"},{"id":"bitebase-agentics-ai","label":"bitebase-agentics-ai","category":"ai-agent","layer":"frontend","stack":["TypeScript/JavaScript"],"frameworks":["Next.js","React","Tailwind CSS","Radix UI","Mapbox","Recharts","Zustand"],"description":"","maturity":"active"},{"id":"bitebase-ai","label":"bitebase-ai","category":"core","layer":"frontend","stack":["TypeScript/JavaScript"],"frameworks":["Next.js","React","Tailwind CSS","Prisma","Supabase","Radix UI","Mapbox","Zustand","PostgreSQL"],"description":"","maturity":"active"},{"id":"bitebase-ai-agents","label":"bitebase-ai-agents","category":"ai-agent","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"active"},{"id":"bitebase-ai-workspace","label":"bitebase-ai-workspace","category":"workspace","layer":"fullstack","stack":["TypeScript/JavaScript"],"frameworks":["Next.js","React","Express","Tailwind CSS","Radix UI","Recharts","PostgreSQL","Redis"],"description":"","maturity":"active"},{"id":"bitebase-backend-express","label":"bitebase-backend-express","category":"intelligence","layer":"backend","stack":["TypeScript/JavaScript"],"frameworks":["Express","OpenAI","Mapbox","PostgreSQL","Redis"],"description":"BiteBase AI-Powered Restaurant Intelligence Platform - Production Backend","maturity":"active"},{"id":"bitebase-beta-app-r1","label":"bitebase-beta-app-r1","category":"prototype","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"experimental"},{"id":"bitebase-coagents","label":"bitebase-coagents","category":"ai-agent","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"active"},{"id":"bitebase-geospatial-saas","label":"bitebase-geospatial-saas","category":"geospatial","layer":"tooling","stack":["TypeScript/JavaScript"],"frameworks":["Mapbox","Turborepo"],"description":"","maturity":"active"},{"id":"bitebase-intelligence","label":"bitebase-intelligence","category":"intelligence","layer":"tooling","stack":["TypeScript/JavaScript"],"frameworks":["Mapbox","Turborepo"],"description":"BiteBase Intelligence - Unified monorepo for frontend and backend applications","maturity":"active"},{"id":"bitebase-intelligence-v2","label":"bitebase-intelligence-v2","category":"intelligence","layer":"frontend","stack":["TypeScript/JavaScript"],"frameworks":["Next.js","React","Tailwind CSS","Supabase","Radix UI"],"description":"","maturity":"iteration"},{"id":"bitebase-orchestration-design","label":"bitebase-orchestration-design","category":"orchestration","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"active"},{"id":"bitebase-prototype.app","label":"bitebase-prototype.app","category":"prototype","layer":"frontend","stack":["TypeScript/JavaScript"],"frameworks":["React","Tailwind CSS","Supabase","Radix UI","Leaflet","Recharts","Vite"],"description":"","maturity":"experimental"},{"id":"bitebase-ui","label":"bitebase-ui","category":"ui-library","layer":"tooling","stack":["TypeScript/JavaScript"],"frameworks":[],"description":"","maturity":"active"},{"id":"bitebase-v2","label":"bitebase-v2","category":"core","layer":"fullstack","stack":["TypeScript/JavaScript"],"frameworks":["Next.js","React","Express","Tailwind CSS","OpenAI","LangChain","CopilotKit","Radix UI","Recharts","Drizzle ORM","TanStack"],"description":"","maturity":"iteration"},{"id":"bitebase-workspace.coder","label":"bitebase-workspace.coder","category":"workspace","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"active"},{"id":"bolt-new.bitebase.app","label":"bolt-new.bitebase.app","category":"core","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"active"},{"id":"enhancement-bitebase-ai","label":"enhancement-bitebase-ai","category":"ai-agent","layer":"frontend","stack":["TypeScript/JavaScript"],"frameworks":["Next.js","React","Tailwind CSS","Prisma","Supabase","OpenAI","LangChain","Radix UI","Mapbox","PostgreSQL"],"description":"BiteBase AI - Complete Restaurant Intelligence Platform with Enhanced LangGraph Agent System & Copilot Integration","maturity":"evolution"},{"id":"enhancement-bitebase-intelligence","label":"enhancement-bitebase-intelligence","category":"intelligence","layer":"tooling","stack":["TypeScript/JavaScript"],"frameworks":[],"description":"AI-powered restaurant intelligence and location analytics platform","maturity":"evolution"},{"id":"llm_wiki","label":"llm_wiki","category":"knowledge-base","layer":"frontend","stack":["TypeScript/JavaScript","Rust"],"frameworks":["Next.js","React","Tailwind CSS","shadcn/ui","Vite","Sigma.js","Zustand","Tauri"],"description":"","maturity":"active"},{"id":"mcp-server-bitebase-app","label":"mcp-server-bitebase-app","category":"mcp-server","layer":"tooling","stack":["TypeScript/JavaScript"],"frameworks":[],"description":"","maturity":"active"},{"id":"prelunch-bitebase-app","label":"prelunch-bitebase-app","category":"prototype","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"experimental"},{"id":"prelunch.bitebase.app","label":"prelunch.bitebase.app","category":"prototype","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"experimental"},{"id":"prototype.bitebase.app","label":"prototype.bitebase.app","category":"prototype","layer":"frontend","stack":["TypeScript/JavaScript"],"frameworks":["Next.js","React","Tailwind CSS","Prisma","OpenAI","Radix UI","Recharts","Drizzle ORM","PostgreSQL"],"description":"","maturity":"experimental"},{"id":"style-guide.bitebase.github.io","label":"style-guide.bitebase.github.io","category":"ui-library","layer":"unknown","stack":[],"frameworks":[],"description":"","maturity":"active"}],"edges":[{"source":"Bitebase-Agentic-AI-Infrastructure","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"CopilotKit"},{"source":"agentic-ai-agent.bitebase.app","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"LangChain"},{"source":"agentic-ai-agent.bitebase.app","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"LangChain"},{"source":"bitebase-v2","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"LangChain"},{"source":"agentic-ai-agent.bitebase.app","target":"bitebase-backend-express","type":"shared_framework","weight":3,"label":"OpenAI"},{"source":"agentic-ai-agent.bitebase.app","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"OpenAI"},{"source":"bitebase-backend-express","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"OpenAI"},{"source":"bitebase-backend-express","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"OpenAI"},{"source":"bitebase-backend-express","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"OpenAI"},{"source":"bitebase-v2","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"OpenAI"},{"source":"enhancement-bitebase-ai","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"OpenAI"},{"source":"beta-bitebase","target":"beta-bitebase-app","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase","target":"beta-bitebase-app-r1","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase","target":"bitebase-agentics-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase","target":"bitebase-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase","target":"bitebase-ai-workspace","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase","target":"bitebase-intelligence-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase","target":"llm_wiki","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app","target":"beta-bitebase-app-r1","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app","target":"bitebase-agentics-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app","target":"bitebase-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app","target":"bitebase-ai-workspace","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app","target":"bitebase-intelligence-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app","target":"llm_wiki","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app-r1","target":"bitebase-agentics-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app-r1","target":"bitebase-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app-r1","target":"bitebase-ai-workspace","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app-r1","target":"bitebase-intelligence-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app-r1","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app-r1","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app-r1","target":"llm_wiki","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase-app-r1","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-agentics-ai","target":"bitebase-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-agentics-ai","target":"bitebase-ai-workspace","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-agentics-ai","target":"bitebase-intelligence-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-agentics-ai","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-agentics-ai","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-agentics-ai","target":"llm_wiki","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-agentics-ai","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-ai","target":"bitebase-ai-workspace","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-ai","target":"bitebase-intelligence-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-ai","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-ai","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-ai","target":"llm_wiki","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-ai","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-ai-workspace","target":"bitebase-intelligence-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-ai-workspace","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-ai-workspace","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-ai-workspace","target":"llm_wiki","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-ai-workspace","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-intelligence-v2","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-intelligence-v2","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-intelligence-v2","target":"llm_wiki","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-intelligence-v2","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"bitebase-v2","target":"llm_wiki","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"enhancement-bitebase-ai","target":"llm_wiki","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"llm_wiki","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"Next.js"},{"source":"beta-bitebase","target":"bitebase-backend-express","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"beta-bitebase","target":"bitebase-geospatial-saas","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"beta-bitebase","target":"bitebase-intelligence","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"beta-bitebase-app","target":"bitebase-backend-express","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"beta-bitebase-app","target":"bitebase-geospatial-saas","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"beta-bitebase-app","target":"bitebase-intelligence","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"beta-bitebase-app-r1","target":"bitebase-backend-express","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"beta-bitebase-app-r1","target":"bitebase-geospatial-saas","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"beta-bitebase-app-r1","target":"bitebase-intelligence","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"bitebase-agentics-ai","target":"bitebase-backend-express","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"bitebase-agentics-ai","target":"bitebase-geospatial-saas","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"bitebase-agentics-ai","target":"bitebase-intelligence","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"bitebase-ai","target":"bitebase-backend-express","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"bitebase-ai","target":"bitebase-geospatial-saas","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"bitebase-ai","target":"bitebase-intelligence","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"bitebase-backend-express","target":"bitebase-geospatial-saas","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"bitebase-backend-express","target":"bitebase-intelligence","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"bitebase-geospatial-saas","target":"bitebase-intelligence","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"bitebase-geospatial-saas","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"bitebase-intelligence","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"Mapbox"},{"source":"beta-bitebase-app","target":"bitebase-agent-","type":"shared_framework","weight":3,"label":"React"},{"source":"beta-bitebase-app","target":"bitebase-prototype.app","type":"shared_framework","weight":3,"label":"React"},{"source":"beta-bitebase-app-r1","target":"bitebase-agent-","type":"shared_framework","weight":3,"label":"React"},{"source":"beta-bitebase-app-r1","target":"bitebase-prototype.app","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-agent-","target":"bitebase-agentics-ai","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-agent-","target":"bitebase-ai","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-agent-","target":"bitebase-ai-workspace","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-agent-","target":"bitebase-intelligence-v2","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-agent-","target":"bitebase-prototype.app","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-agent-","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-agent-","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-agent-","target":"llm_wiki","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-agent-","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-agentics-ai","target":"bitebase-prototype.app","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-ai","target":"bitebase-prototype.app","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-ai-workspace","target":"bitebase-prototype.app","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-intelligence-v2","target":"bitebase-prototype.app","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-prototype.app","target":"bitebase-v2","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-prototype.app","target":"enhancement-bitebase-ai","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-prototype.app","target":"llm_wiki","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-prototype.app","target":"prototype.bitebase.app","type":"shared_framework","weight":3,"label":"React"},{"source":"bitebase-ai-workspace","target":"bitebase-backend-express","type":"shared_framework","weight":3,"label":"PostgreSQL"},{"source":"bitebase-backend-express","target":"bitebase-ai","type":"serves","weight":5,"label":"REST API"},{"source":"bitebase-backend-express","target":"bitebase-v2","type":"serves","weight":5,"label":"REST API"},{"source":"bitebase-backend-express","target":"enhancement-bitebase-ai","type":"serves","weight":4,"label":"REST API"},{"source":"bitebase-backend-express","target":"bitebase-agentics-ai","type":"serves","weight":4,"label":"REST API"},{"source":"bitebase-intelligence","target":"bitebase-intelligence-v2","type":"evolved_to","weight":5,"label":"v1\u2192v2"},{"source":"BiteBase-Intelligence-R1","target":"bitebase-intelligence-v2","type":"evolved_to","weight":4,"label":"R1\u2192v2"},{"source":"enhancement-bitebase-intelligence","target":"bitebase-intelligence-v2","type":"enhances","weight":4,"label":"enhancement"},{"source":"bitebase-ai-agents","target":"agentic-ai-agent.bitebase.app","type":"deploys_as","weight":4,"label":"Python agent"},{"source":"Bitebase-Agentic-AI-Infrastructure","target":"bitebase-agentics-ai","type":"infra_for","weight":5,"label":"CopilotKit infra"},{"source":"Bitebase-Agentic-AI-Infrastructure","target":"bitebase-coagents","type":"infra_for","weight":5,"label":"CoAgents infra"},{"source":"bitebase-ai","target":"bitebase-v2","type":"evolved_to","weight":5,"label":"core\u2192v2"},{"source":"enhancement-bitebase-ai","target":"bitebase-v2","type":"merged_into","weight":4,"label":"enhancements\u2192v2"},{"source":"prelunch-bitebase-app","target":"beta-bitebase-app","type":"evolved_to","weight":3,"label":"prelaunch\u2192beta"},{"source":"beta-bitebase-app","target":"bitebase-v2","type":"evolved_to","weight":4,"label":"beta\u2192v2"},{"source":"bitebase-prototype.app","target":"prototype.bitebase.app","type":"variant_of","weight":3,"label":"prototype variants"},{"source":"beta-bitebase-app-r1","target":"beta-bitebase-app","type":"iteration_of","weight":4,"label":"r1 iteration"},{"source":"bitebase-beta-app-r1","target":"beta-bitebase-app","type":"iteration_of","weight":3,"label":"beta r1"},{"source":"mcp-server-bitebase-app","target":"bitebase-v2","type":"extends","weight":5,"label":"MCP protocol"},{"source":"mcp-server-bitebase-app","target":"enhancement-bitebase-ai","type":"extends","weight":4,"label":"MCP protocol"},{"source":"_authenticationAPI.BiteBase.app","target":"bitebase-backend-express","type":"auth_for","weight":5,"label":"auth service"},{"source":"_authenticationAPI.BiteBase.app","target":"bitebase-ai","type":"auth_for","weight":4,"label":"auth service"},{"source":"bitebase-ui","target":"bitebase-v2","type":"consumed_by","weight":4,"label":"UI components"},{"source":"bitebase-ui","target":"enhancement-bitebase-ai","type":"consumed_by","weight":3,"label":"UI components"},{"source":"style-guide.bitebase.github.io","target":"bitebase-ui","type":"guides","weight":3,"label":"style guide"},{"source":"bitebase-geospatial-saas","target":"bitebase-ai","type":"geo_layer_for","weight":4,"label":"Mapbox/Geo"},{"source":"bitebase-geospatial-saas","target":"bitebase-v2","type":"geo_layer_for","weight":4,"label":"Mapbox/Geo"},{"source":"bitebase-orchestration-design","target":"bitebase-v2","type":"orchestrates","weight":3,"label":"workflow design"},{"source":"agentic-workflows.bitebase.app","target":"bitebase-orchestration-design","type":"implements","weight":4,"label":"workflow impl"},{"source":"bitebase-workspace.coder","target":"bitebase-ai-workspace","type":"config_for","weight":3,"label":"coder config"},{"source":"llm_wiki","target":"bitebase-ai","type":"knowledge_for","weight":3,"label":"LLM wiki knowledge"},{"source":"llm_wiki","target":"bitebase-v2","type":"knowledge_for","weight":3,"label":"LLM wiki knowledge"}],"clusters":{"Core Platform":{"color":"#3B82F6","repos":["bitebase-ai","bitebase-v2","enhancement-bitebase-ai","bitebase-backend-express","_authenticationAPI.BiteBase.app"],"description":"Main platform \u2014 restaurant discovery, AI copilot, backend API, auth"},"Intelligence":{"color":"#8B5CF6","repos":["bitebase-intelligence","bitebase-intelligence-v2","BiteBase-Intelligence-R1","enhancement-bitebase-intelligence","beta-bitebase-app","beta-bitebase-app-r1","bitebase-beta-app-r1"],"description":"Market intelligence dashboards, analytics, and insights"},"AI Agents":{"color":"#10B981","repos":["bitebase-agent-","bitebase-ai-agents","Bitebase-Agentic-AI-Infrastructure","bitebase-coagents","agentic-ai-agent.bitebase.app","agentic-workflows.bitebase.app","bitebase-agentics-ai"],"description":"Autonomous AI agents, CopilotKit infrastructure, agentic workflows"},"Geospatial":{"color":"#F59E0B","repos":["bitebase-geospatial-saas"],"description":"Map-based restaurant discovery, geospatial analytics"},"Prototypes & Iterations":{"color":"#EF4444","repos":["prelunch-bitebase-app","prelunch.bitebase.app","bitebase-prototype.app","prototype.bitebase.app","beta-bitebase","bolt-new.bitebase.app"],"description":"Early prototypes, pre-launch, and beta iterations"},"UI & Design":{"color":"#EC4899","repos":["bitebase-ui","style-guide.bitebase.github.io"],"description":"Shared component library, style guide, design system"},"Infrastructure":{"color":"#6366F1","repos":["bitebase-orchestration-design","bitebase-workspace.coder","bitebase-ai-workspace","mcp-server-bitebase-app"],"description":"Orchestration, workspace config, MCP server, dev tooling"},"Knowledge Base":{"color":"#14B8A6","repos":["llm_wiki"],"description":"LLM Wiki \u2014 self-building personal knowledge base with graph visualization"}},"technology_map":{"CopilotKit":["Bitebase-Agentic-AI-Infrastructure","bitebase-v2"],"LangChain":["agentic-ai-agent.bitebase.app","bitebase-v2","enhancement-bitebase-ai"],"OpenAI":["agentic-ai-agent.bitebase.app","bitebase-backend-express","bitebase-v2","enhancement-bitebase-ai","prototype.bitebase.app"],"Pandas":["agentic-ai-agent.bitebase.app"],"Next.js":["beta-bitebase","beta-bitebase-app","beta-bitebase-app-r1","bitebase-agentics-ai","bitebase-ai","bitebase-ai-workspace","bitebase-intelligence-v2","bitebase-v2","enhancement-bitebase-ai","llm_wiki","prototype.bitebase.app"],"Mapbox":["beta-bitebase","beta-bitebase-app","beta-bitebase-app-r1","bitebase-agentics-ai","bitebase-ai","bitebase-backend-express","bitebase-geospatial-saas","bitebase-intelligence","enhancement-bitebase-ai"],"Turborepo":["beta-bitebase","bitebase-geospatial-saas","bitebase-intelligence"],"React":["beta-bitebase-app","beta-bitebase-app-r1","bitebase-agent-","bitebase-agentics-ai","bitebase-ai","bitebase-ai-workspace","bitebase-intelligence-v2","bitebase-prototype.app","bitebase-v2","enhancement-bitebase-ai","llm_wiki","prototype.bitebase.app"],"Tailwind CSS":["beta-bitebase-app","beta-bitebase-app-r1","bitebase-agentics-ai","bitebase-ai","bitebase-ai-workspace","bitebase-intelligence-v2","bitebase-prototype.app","bitebase-v2","enhancement-bitebase-ai","llm_wiki","prototype.bitebase.app"],"Radix UI":["beta-bitebase-app","beta-bitebase-app-r1","bitebase-agentics-ai","bitebase-ai","bitebase-ai-workspace","bitebase-intelligence-v2","bitebase-prototype.app","bitebase-v2","enhancement-bitebase-ai","prototype.bitebase.app"],"Leaflet":["beta-bitebase-app","bitebase-prototype.app"],"D3.js":["beta-bitebase-app","beta-bitebase-app-r1"],"Recharts":["beta-bitebase-app","beta-bitebase-app-r1","bitebase-agentics-ai","bitebase-ai-workspace","bitebase-prototype.app","bitebase-v2","prototype.bitebase.app"],"Zustand":["beta-bitebase-app","bitebase-agentics-ai","bitebase-ai","llm_wiki"],"TanStack":["beta-bitebase-app","beta-bitebase-app-r1","bitebase-v2"],"Vite":["bitebase-agent-","bitebase-prototype.app","llm_wiki"],"Prisma":["bitebase-ai","enhancement-bitebase-ai","prototype.bitebase.app"],"Supabase":["bitebase-ai","bitebase-intelligence-v2","bitebase-prototype.app","enhancement-bitebase-ai"],"PostgreSQL":["bitebase-ai","bitebase-ai-workspace","bitebase-backend-express","enhancement-bitebase-ai","prototype.bitebase.app"],"Express":["bitebase-ai-workspace","bitebase-backend-express","bitebase-v2"],"Redis":["bitebase-ai-workspace","bitebase-backend-express"],"Drizzle ORM":["bitebase-v2","prototype.bitebase.app"],"shadcn/ui":["llm_wiki"],"Sigma.js":["llm_wiki"],"Tauri":["llm_wiki"]},"metadata":{"total_repos":33,"total_edges":206,"total_clusters":8,"total_technologies":25}};
+
+// ── COLORS ──
+const CLUSTER_COLORS = {};
+for (const [name, cluster] of Object.entries(GRAPH_DATA.clusters)) {
+  CLUSTER_COLORS[name] = cluster.color;
+}
+
+const CATEGORY_COLORS = {
+  "core": "#3B82F6",
+  "intelligence": "#8B5CF6",
+  "ai-agent": "#10B981",
+  "geospatial": "#F59E0B",
+  "prototype": "#EF4444",
+  "ui-library": "#EC4899",
+  "infrastructure": "#6366F1",
+  "knowledge-base": "#14B8A6",
+  "backend-api": "#F97316",
+  "workspace": "#818CF8",
+  "orchestration": "#A78BFA",
+  "mcp-server": "#06B6D4",
+  "coagents": "#34D399",
+  "enhancement": "#FB923C",
+};
+
+const LAYER_SHAPES = {
+  "fullstack": "hexagon",
+  "frontend": "circle",
+  "backend": "square",
+  "ai-service": "diamond",
+  "infrastructure": "triangle",
+  "tooling": "star",
+  "unknown": "circle",
+};
+
+const EDGE_COLORS = {
+  "shared_framework": "#3B82F680",
+  "same_category": "#8B5CF640",
+  "serves": "#F59E0B",
+  "evolved_to": "#10B981",
+  "enhances": "#06B6D4",
+  "infra_for": "#6366F1",
+  "merged_into": "#EC4899",
+  "extends": "#14B8A6",
+  "auth_for": "#F97316",
+  "consumed_by": "#EC4899",
+  "geo_layer_for": "#F59E0B",
+  "orchestrates": "#A78BFA",
+  "implements": "#818CF8",
+  "config_for": "#6366F1",
+  "knowledge_for": "#14B8A6",
+  "deploys_as": "#34D399",
+  "variant_of": "#EF4444",
+  "iteration_of": "#FB923C",
+  "guides": "#EC4899",
+  "generated_from": "#94A3B8",
+};
+
+// ── STATE ──
+let selectedNode = null;
+let showLabels = true;
+let activeCategory = null;
+let activeLayer = null;
+let searchTerm = "";
+
+// ── BUILD GRAPH ──
+const nodes = GRAPH_DATA.nodes.map(n => ({...n}));
+const edges = GRAPH_DATA.edges.map(e => ({...e}));
+const nodeMap = {};
+nodes.forEach(n => nodeMap[n.id] = n);
+
+// Assign cluster to each node
+const nodeCluster = {};
+for (const [cname, cluster] of Object.entries(GRAPH_DATA.clusters)) {
+  cluster.repos.forEach(r => { nodeCluster[r] = cname; });
+}
+
+// ── STATS ──
+document.getElementById("stats").innerHTML = `
+  <div class="stat"><div class="num">${GRAPH_DATA.metadata.total_repos}</div><div class="lbl">Repos</div></div>
+  <div class="stat"><div class="num">${GRAPH_DATA.metadata.total_edges}</div><div class="lbl">Edges</div></div>
+  <div class="stat"><div class="num">${GRAPH_DATA.metadata.total_clusters}</div><div class="lbl">Clusters</div></div>
+  <div class="stat"><div class="num">${GRAPH_DATA.metadata.total_technologies}</div><div class="lbl">Techs</div></div>
+`;
+
+// ── FILTERS ──
+const categories = [...new Set(nodes.map(n => n.category))].sort();
+const layers = [...new Set(nodes.map(n => n.layer))].sort();
+
+let filterHTML = '<label>Category</label><div class="filter-row">';
+filterHTML += `<button class="filter-btn active" data-filter="category" data-value="">All</button>`;
+categories.forEach(c => {
+  filterHTML += `<button class="filter-btn" data-filter="category" data-value="${c}" style="border-left:3px solid ${CATEGORY_COLORS[c] || '#666'}">${c}</button>`;
+});
+filterHTML += '</div><label>Layer</label><div class="filter-row">';
+filterHTML += `<button class="filter-btn active" data-filter="layer" data-value="">All</button>`;
+layers.forEach(l => {
+  filterHTML += `<button class="filter-btn" data-filter="layer" data-value="${l}">${l}</button>`;
+});
+filterHTML += '</div>';
+document.getElementById("filters").innerHTML = filterHTML;
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filterType = btn.dataset.filter;
+    const value = btn.dataset.value;
+    document.querySelectorAll(`.filter-btn[data-filter="${filterType}"]`).forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (filterType === 'category') activeCategory = value || null;
+    if (filterType === 'layer') activeLayer = value || null;
+    applyFilters();
+  });
+});
+
+// ── LEGEND ──
+let legendHTML = '<h3>Clusters</h3>';
+for (const [name, cluster] of Object.entries(GRAPH_DATA.clusters)) {
+  legendHTML += `<div class="legend-item" data-cluster="${name}">
+    <div class="legend-dot" style="background:${cluster.color}"></div>
+    <span>${name}</span>
+    <span class="legend-count">${cluster.repos.length}</span>
+  </div>`;
+}
+document.getElementById("legend").innerHTML = legendHTML;
+
+document.querySelectorAll('.legend-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const cluster = item.dataset.cluster;
+    const repos = GRAPH_DATA.clusters[cluster].repos;
+    highlightNodes(repos);
+  });
+});
+
+// ── REPO LIST ──
+function renderRepoList() {
+  const filtered = nodes.filter(n => {
+    if (activeCategory && n.category !== activeCategory) return false;
+    if (activeLayer && n.layer !== activeLayer) return false;
+    if (searchTerm && !n.id.toLowerCase().includes(searchTerm) && !n.description.toLowerCase().includes(searchTerm)) return false;
+    return true;
+  });
+  const listEl = document.getElementById("repo-list");
+  listEl.innerHTML = filtered.map(n => `
+    <div class="repo-card ${selectedNode === n.id ? 'active' : ''}" data-id="${n.id}">
+      <h4>${n.id}</h4>
+      <div class="meta">
+        <span class="tag" style="background:${CATEGORY_COLORS[n.category]}22;color:${CATEGORY_COLORS[n.category]}">${n.category}</span>
+        <span class="tag layer">${n.layer}</span>
+        <span class="tag maturity">${n.maturity}</span>
+      </div>
+      <div class="desc">${n.description || 'No description'}</div>
+      <div class="fws">${(n.frameworks || []).join(', ')}</div>
+    </div>
+  `).join('');
+  listEl.querySelectorAll('.repo-card').forEach(card => {
+    card.addEventListener('click', () => {
+      selectNode(card.dataset.id);
+    });
+  });
+}
+renderRepoList();
+
+// ── SEARCH ──
+document.getElementById("search").addEventListener("input", (e) => {
+  searchTerm = e.target.value.toLowerCase();
+  renderRepoList();
+  applyFilters();
+});
+
+// ── D3 FORCE GRAPH ──
+const svg = d3.select("#graph");
+const width = document.getElementById("graph-area").clientWidth;
+const height = document.getElementById("graph-area").clientHeight;
+svg.attr("viewBox", [0, 0, width, height]);
+
+const g = svg.append("g");
+
+const zoom = d3.zoom()
+  .scaleExtent([0.2, 5])
+  .on("zoom", (event) => g.attr("transform", event.transform));
+svg.call(zoom);
+
+// Build links
+const links = edges.map(e => ({
+  source: e.source,
+  target: e.target,
+  type: e.type,
+  weight: e.weight,
+  label: e.label,
+}));
+
+const simulation = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links).id(d => d.id).distance(d => 80 + (5 - d.weight) * 30))
+  .force("charge", d3.forceManyBody().strength(-300))
+  .force("center", d3.forceCenter(width / 2, height / 2))
+  .force("collision", d3.forceCollide().radius(25));
+
+// Links
+const link = g.append("g")
+  .selectAll("line")
+  .data(links)
+  .join("line")
+  .attr("class", "link")
+  .attr("stroke", d => EDGE_COLORS[d.type] || "#333")
+  .attr("stroke-width", d => Math.max(1, d.weight * 0.6))
+  .attr("stroke-dasharray", d => d.type === "shared_framework" ? "4,4" : d.type === "same_category" ? "2,4" : "none");
+
+// Node groups
+const node = g.append("g")
+  .selectAll("g")
+  .data(nodes)
+  .join("g")
+  .attr("class", "node")
+  .call(d3.drag()
+    .on("start", dragstarted)
+    .on("drag", dragged)
+    .on("end", dragended));
+
+// Node shapes
+node.each(function(d) {
+  const color = CATEGORY_COLORS[d.category] || "#666";
+  const shape = LAYER_SHAPES[d.layer] || "circle";
+  const el = d3.select(this);
+
+  if (shape === "circle") {
+    el.append("circle").attr("r", 10).attr("fill", color).attr("stroke", "#fff").attr("stroke-width", 1.5);
+  } else if (shape === "square") {
+    el.append("rect").attr("x", -8).attr("y", -8).attr("width", 16).attr("height", 16).attr("rx", 3).attr("fill", color).attr("stroke", "#fff").attr("stroke-width", 1.5);
+  } else if (shape === "diamond") {
+    el.append("polygon").attr("points", "0,-12 12,0 0,12 -12,0").attr("fill", color).attr("stroke", "#fff").attr("stroke-width", 1.5);
+  } else if (shape === "hexagon") {
+    const pts = Array.from({length:6}, (_,i) => {
+      const a = Math.PI / 3 * i - Math.PI / 6;
+      return `${12*Math.cos(a)},${12*Math.sin(a)}`;
+    }).join(" ");
+    el.append("polygon").attr("points", pts).attr("fill", color).attr("stroke", "#fff").attr("stroke-width", 1.5);
+  } else if (shape === "triangle") {
+    el.append("polygon").attr("points", "0,-12 12,10 -12,10").attr("fill", color).attr("stroke", "#fff").attr("stroke-width", 1.5);
+  } else {
+    el.append("circle").attr("r", 10).attr("fill", color).attr("stroke", "#fff").attr("stroke-width", 1.5);
+  }
+});
+
+// Labels
+const label = g.append("g")
+  .selectAll("text")
+  .data(nodes)
+  .join("text")
+  .attr("class", "node-label")
+  .text(d => d.id.replace(/bitebase[-.]/gi, "").replace(/\.bitebase\.app$/i, "").replace(/[-_.]/g, " ").trim() || d.id)
+  .attr("dy", -16);
+
+// Tooltip
+const tooltip = document.getElementById("tooltip");
+
+node.on("mouseover", (event, d) => {
+  tooltip.innerHTML = `
+    <h4 style="color:${CATEGORY_COLORS[d.category]}">${d.id}</h4>
+    <div class="tt-meta">${d.layer} · ${d.category} · ${d.maturity}</div>
+    <div class="tt-desc">${d.description || 'No description'}</div>
+    <div class="tt-fws">${(d.frameworks || []).join(', ')}</div>
+  `;
+  tooltip.classList.add("visible");
+  highlightNeighbors(d.id);
+})
+.on("mousemove", (event) => {
+  const rect = document.getElementById("graph-area").getBoundingClientRect();
+  tooltip.style.left = (event.clientX - rect.left + 16) + "px";
+  tooltip.style.top = (event.clientY - rect.top - 10) + "px";
+})
+.on("mouseout", () => {
+  tooltip.classList.remove("visible");
+  if (!selectedNode) clearHighlights();
+  else highlightNeighbors(selectedNode);
+})
+.on("click", (event, d) => {
+  selectNode(d.id);
+});
+
+// Simulation tick
+simulation.on("tick", () => {
+  link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+  node.attr("transform", d => `translate(${d.x},${d.y})`);
+  label.attr("x", d => d.x).attr("y", d => d.y);
+});
+
+// ── INTERACTION ──
+function selectNode(id) {
+  selectedNode = selectedNode === id ? null : id;
+  renderRepoList();
+  if (selectedNode) highlightNeighbors(selectedNode);
+  else clearHighlights();
+  // Scroll card into view
+  const card = document.querySelector(`.repo-card[data-id="${id}"]`);
+  if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function highlightNeighbors(id) {
+  const neighbors = new Set([id]);
+  links.forEach(l => {
+    if (l.source.id === id) neighbors.add(l.target.id);
+    if (l.target.id === id) neighbors.add(l.source.id);
+  });
+  node.classed("dimmed", d => !neighbors.has(d.id))
+      .classed("highlighted", d => d.id === id);
+  link.classed("dimmed", d => d.source.id !== id && d.target.id !== id)
+      .classed("highlighted", d => d.source.id === id || d.target.id === id);
+  label.classed("highlighted", d => d.id === id || neighbors.has(d.id))
+       .attr("display", d => (showLabels || neighbors.has(d.id)) ? null : "none");
+}
+
+function highlightNodes(ids) {
+  const set = new Set(ids);
+  node.classed("dimmed", d => !set.has(d.id))
+      .classed("highlighted", d => set.has(d.id));
+  link.classed("dimmed", d => !set.has(d.source.id) || !set.has(d.target.id))
+      .classed("highlighted", d => set.has(d.source.id) && set.has(d.target.id));
+  label.classed("highlighted", d => set.has(d.id));
+}
+
+function clearHighlights() {
+  node.classed("dimmed", false).classed("highlighted", false);
+  link.classed("dimmed", false).classed("highlighted", false);
+  label.classed("highlighted", false).attr("display", showLabels ? null : "none");
+}
+
+function applyFilters() {
+  node.classed("dimmed", d => {
+    if (activeCategory && d.category !== activeCategory) return true;
+    if (activeLayer && d.layer !== activeLayer) return true;
+    if (searchTerm && !d.id.toLowerCase().includes(searchTerm) && !d.description.toLowerCase().includes(searchTerm)) return true;
+    return false;
+  });
+}
+
+// ── CONTROLS ──
+document.getElementById("zoom-in").addEventListener("click", () => {
+  svg.transition().duration(300).call(zoom.scaleBy, 1.3);
+});
+document.getElementById("zoom-out").addEventListener("click", () => {
+  svg.transition().duration(300).call(zoom.scaleBy, 0.7);
+});
+document.getElementById("zoom-fit").addEventListener("click", () => {
+  svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+});
+document.getElementById("toggle-labels").addEventListener("click", () => {
+  showLabels = !showLabels;
+  label.attr("display", showLabels ? null : "none");
+  document.getElementById("toggle-labels").style.borderColor = showLabels ? "var(--accent)" : "var(--border)";
+});
+
+// ── DRAG ──
+function dragstarted(event, d) {
+  if (!event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x; d.fy = d.y;
+}
+function dragged(event, d) {
+  d.fx = event.x; d.fy = event.y;
+}
+function dragended(event, d) {
+  if (!event.active) simulation.alphaTarget(0);
+  d.fx = null; d.fy = null;
+}
+</script>
+</body>
+</html>

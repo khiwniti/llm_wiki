@@ -1,0 +1,2266 @@
+{
+  "nodes": [
+    {
+      "id": "BiteBase-Intelligence-R1",
+      "label": "BiteBase-Intelligence-R1",
+      "category": "intelligence",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "iteration",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "Bitebase-Agentic-AI-Infrastructure",
+      "label": "Bitebase-Agentic-AI-Infrastructure",
+      "category": "ai-agent",
+      "layer": "ai-service",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "CopilotKit"
+      ],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 4,
+      "pip_deps": 0
+    },
+    {
+      "id": "_authenticationAPI.BiteBase.app",
+      "label": "_authenticationAPI.BiteBase.app",
+      "category": "backend-api",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "agentic-ai-agent.bitebase.app",
+      "label": "agentic-ai-agent.bitebase.app",
+      "category": "ai-agent",
+      "layer": "ai-service",
+      "stack": [
+        "Python"
+      ],
+      "frameworks": [
+        "LangChain",
+        "OpenAI",
+        "Pandas"
+      ],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 0,
+      "pip_deps": 33
+    },
+    {
+      "id": "agentic-workflows.bitebase.app",
+      "label": "agentic-workflows.bitebase.app",
+      "category": "ai-agent",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "beta-bitebase",
+      "label": "beta-bitebase",
+      "category": "prototype",
+      "layer": "frontend",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Next.js",
+        "Mapbox",
+        "Turborepo"
+      ],
+      "description": "",
+      "maturity": "experimental",
+      "npm_deps": 11,
+      "pip_deps": 0
+    },
+    {
+      "id": "beta-bitebase-app",
+      "label": "beta-bitebase-app",
+      "category": "intelligence",
+      "layer": "frontend",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Next.js",
+        "React",
+        "Tailwind CSS",
+        "Radix UI",
+        "Leaflet",
+        "Mapbox",
+        "D3.js",
+        "Recharts",
+        "Zustand",
+        "TanStack"
+      ],
+      "description": "BiteBase Frontend - Enterprise Restaurant Intelligence Platform",
+      "maturity": "experimental",
+      "npm_deps": 59,
+      "pip_deps": 0
+    },
+    {
+      "id": "beta-bitebase-app-r1",
+      "label": "beta-bitebase-app-r1",
+      "category": "intelligence",
+      "layer": "frontend",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Next.js",
+        "React",
+        "Tailwind CSS",
+        "Radix UI",
+        "Mapbox",
+        "D3.js",
+        "Recharts",
+        "TanStack"
+      ],
+      "description": "BiteBase AI-Powered Restaurant Intelligence Platform - Production Frontend",
+      "maturity": "experimental",
+      "npm_deps": 60,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-agent-",
+      "label": "bitebase-agent-",
+      "category": "ai-agent",
+      "layer": "frontend",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "React",
+        "Vite"
+      ],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 4,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-agentics-ai",
+      "label": "bitebase-agentics-ai",
+      "category": "ai-agent",
+      "layer": "frontend",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Next.js",
+        "React",
+        "Tailwind CSS",
+        "Radix UI",
+        "Mapbox",
+        "Recharts",
+        "Zustand"
+      ],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 23,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-ai",
+      "label": "bitebase-ai",
+      "category": "core",
+      "layer": "frontend",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Next.js",
+        "React",
+        "Tailwind CSS",
+        "Prisma",
+        "Supabase",
+        "Radix UI",
+        "Mapbox",
+        "Zustand",
+        "PostgreSQL"
+      ],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 71,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-ai-agents",
+      "label": "bitebase-ai-agents",
+      "category": "ai-agent",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-ai-workspace",
+      "label": "bitebase-ai-workspace",
+      "category": "workspace",
+      "layer": "fullstack",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Next.js",
+        "React",
+        "Express",
+        "Tailwind CSS",
+        "Radix UI",
+        "Recharts",
+        "PostgreSQL",
+        "Redis"
+      ],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 46,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-backend-express",
+      "label": "bitebase-backend-express",
+      "category": "intelligence",
+      "layer": "backend",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Express",
+        "OpenAI",
+        "Mapbox",
+        "PostgreSQL",
+        "Redis"
+      ],
+      "description": "BiteBase AI-Powered Restaurant Intelligence Platform - Production Backend",
+      "maturity": "active",
+      "npm_deps": 25,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-beta-app-r1",
+      "label": "bitebase-beta-app-r1",
+      "category": "prototype",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "experimental",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-coagents",
+      "label": "bitebase-coagents",
+      "category": "ai-agent",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-geospatial-saas",
+      "label": "bitebase-geospatial-saas",
+      "category": "geospatial",
+      "layer": "tooling",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Mapbox",
+        "Turborepo"
+      ],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 9,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-intelligence",
+      "label": "bitebase-intelligence",
+      "category": "intelligence",
+      "layer": "tooling",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Mapbox",
+        "Turborepo"
+      ],
+      "description": "BiteBase Intelligence - Unified monorepo for frontend and backend applications",
+      "maturity": "active",
+      "npm_deps": 1,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-intelligence-v2",
+      "label": "bitebase-intelligence-v2",
+      "category": "intelligence",
+      "layer": "frontend",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Next.js",
+        "React",
+        "Tailwind CSS",
+        "Supabase",
+        "Radix UI"
+      ],
+      "description": "",
+      "maturity": "iteration",
+      "npm_deps": 31,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-orchestration-design",
+      "label": "bitebase-orchestration-design",
+      "category": "orchestration",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-prototype.app",
+      "label": "bitebase-prototype.app",
+      "category": "prototype",
+      "layer": "frontend",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "React",
+        "Tailwind CSS",
+        "Supabase",
+        "Radix UI",
+        "Leaflet",
+        "Recharts",
+        "Vite"
+      ],
+      "description": "",
+      "maturity": "experimental",
+      "npm_deps": 52,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-ui",
+      "label": "bitebase-ui",
+      "category": "ui-library",
+      "layer": "tooling",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 8,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-v2",
+      "label": "bitebase-v2",
+      "category": "core",
+      "layer": "fullstack",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Next.js",
+        "React",
+        "Express",
+        "Tailwind CSS",
+        "OpenAI",
+        "LangChain",
+        "CopilotKit",
+        "Radix UI",
+        "Recharts",
+        "Drizzle ORM",
+        "TanStack"
+      ],
+      "description": "",
+      "maturity": "iteration",
+      "npm_deps": 87,
+      "pip_deps": 0
+    },
+    {
+      "id": "bitebase-workspace.coder",
+      "label": "bitebase-workspace.coder",
+      "category": "workspace",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "bolt-new.bitebase.app",
+      "label": "bolt-new.bitebase.app",
+      "category": "core",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "enhancement-bitebase-ai",
+      "label": "enhancement-bitebase-ai",
+      "category": "ai-agent",
+      "layer": "frontend",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Next.js",
+        "React",
+        "Tailwind CSS",
+        "Prisma",
+        "Supabase",
+        "OpenAI",
+        "LangChain",
+        "Radix UI",
+        "Mapbox",
+        "PostgreSQL"
+      ],
+      "description": "BiteBase AI - Complete Restaurant Intelligence Platform with Enhanced LangGraph Agent System & Copilot Integration",
+      "maturity": "evolution",
+      "npm_deps": 75,
+      "pip_deps": 0
+    },
+    {
+      "id": "enhancement-bitebase-intelligence",
+      "label": "enhancement-bitebase-intelligence",
+      "category": "intelligence",
+      "layer": "tooling",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [],
+      "description": "AI-powered restaurant intelligence and location analytics platform",
+      "maturity": "evolution",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "llm_wiki",
+      "label": "llm_wiki",
+      "category": "knowledge-base",
+      "layer": "frontend",
+      "stack": [
+        "TypeScript/JavaScript",
+        "Rust"
+      ],
+      "frameworks": [
+        "Next.js",
+        "React",
+        "Tailwind CSS",
+        "shadcn/ui",
+        "Vite",
+        "Sigma.js",
+        "Zustand",
+        "Tauri"
+      ],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 34,
+      "pip_deps": 0
+    },
+    {
+      "id": "mcp-server-bitebase-app",
+      "label": "mcp-server-bitebase-app",
+      "category": "mcp-server",
+      "layer": "tooling",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 3,
+      "pip_deps": 0
+    },
+    {
+      "id": "prelunch-bitebase-app",
+      "label": "prelunch-bitebase-app",
+      "category": "prototype",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "experimental",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "prelunch.bitebase.app",
+      "label": "prelunch.bitebase.app",
+      "category": "prototype",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "experimental",
+      "npm_deps": 0,
+      "pip_deps": 0
+    },
+    {
+      "id": "prototype.bitebase.app",
+      "label": "prototype.bitebase.app",
+      "category": "prototype",
+      "layer": "frontend",
+      "stack": [
+        "TypeScript/JavaScript"
+      ],
+      "frameworks": [
+        "Next.js",
+        "React",
+        "Tailwind CSS",
+        "Prisma",
+        "OpenAI",
+        "Radix UI",
+        "Recharts",
+        "Drizzle ORM",
+        "PostgreSQL"
+      ],
+      "description": "",
+      "maturity": "experimental",
+      "npm_deps": 84,
+      "pip_deps": 0
+    },
+    {
+      "id": "style-guide.bitebase.github.io",
+      "label": "style-guide.bitebase.github.io",
+      "category": "ui-library",
+      "layer": "unknown",
+      "stack": [],
+      "frameworks": [],
+      "description": "",
+      "maturity": "active",
+      "npm_deps": 0,
+      "pip_deps": 0
+    }
+  ],
+  "edges": [
+    {
+      "source": "Bitebase-Agentic-AI-Infrastructure",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "CopilotKit"
+    },
+    {
+      "source": "agentic-ai-agent.bitebase.app",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "LangChain"
+    },
+    {
+      "source": "agentic-ai-agent.bitebase.app",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "LangChain"
+    },
+    {
+      "source": "bitebase-v2",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "LangChain"
+    },
+    {
+      "source": "agentic-ai-agent.bitebase.app",
+      "target": "bitebase-backend-express",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "OpenAI"
+    },
+    {
+      "source": "agentic-ai-agent.bitebase.app",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "OpenAI"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "OpenAI"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "OpenAI"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "OpenAI"
+    },
+    {
+      "source": "bitebase-v2",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "OpenAI"
+    },
+    {
+      "source": "enhancement-bitebase-ai",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "OpenAI"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "beta-bitebase-app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "beta-bitebase-app-r1",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "bitebase-agentics-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "bitebase-ai-workspace",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "bitebase-intelligence-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "llm_wiki",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "beta-bitebase-app-r1",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-agentics-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-ai-workspace",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-intelligence-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "llm_wiki",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-agentics-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-ai-workspace",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-intelligence-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "llm_wiki",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "bitebase-ai-workspace",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "bitebase-intelligence-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "llm_wiki",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "bitebase-ai-workspace",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "bitebase-intelligence-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "llm_wiki",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-ai-workspace",
+      "target": "bitebase-intelligence-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-ai-workspace",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-ai-workspace",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-ai-workspace",
+      "target": "llm_wiki",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-ai-workspace",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-intelligence-v2",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-intelligence-v2",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-intelligence-v2",
+      "target": "llm_wiki",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-intelligence-v2",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "bitebase-v2",
+      "target": "llm_wiki",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "enhancement-bitebase-ai",
+      "target": "llm_wiki",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "llm_wiki",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Next.js"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "bitebase-backend-express",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "bitebase-geospatial-saas",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "bitebase-intelligence",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-backend-express",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-geospatial-saas",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-intelligence",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-backend-express",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-geospatial-saas",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-intelligence",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "bitebase-backend-express",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "bitebase-geospatial-saas",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "bitebase-intelligence",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "bitebase-backend-express",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "bitebase-geospatial-saas",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "bitebase-intelligence",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "bitebase-geospatial-saas",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "bitebase-intelligence",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "bitebase-geospatial-saas",
+      "target": "bitebase-intelligence",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "bitebase-geospatial-saas",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "bitebase-intelligence",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "Mapbox"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-agent-",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-prototype.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-agent-",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-prototype.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "bitebase-agentics-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "bitebase-ai-workspace",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "bitebase-intelligence-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "bitebase-prototype.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "llm_wiki",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "bitebase-prototype.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "bitebase-prototype.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-ai-workspace",
+      "target": "bitebase-prototype.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-intelligence-v2",
+      "target": "bitebase-prototype.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-prototype.app",
+      "target": "bitebase-v2",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-prototype.app",
+      "target": "enhancement-bitebase-ai",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-prototype.app",
+      "target": "llm_wiki",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-prototype.app",
+      "target": "prototype.bitebase.app",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "React"
+    },
+    {
+      "source": "bitebase-ai-workspace",
+      "target": "bitebase-backend-express",
+      "type": "shared_framework",
+      "weight": 3,
+      "label": "PostgreSQL"
+    },
+    {
+      "source": "BiteBase-Intelligence-R1",
+      "target": "beta-bitebase-app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "BiteBase-Intelligence-R1",
+      "target": "beta-bitebase-app-r1",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "BiteBase-Intelligence-R1",
+      "target": "bitebase-backend-express",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "BiteBase-Intelligence-R1",
+      "target": "bitebase-intelligence",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "BiteBase-Intelligence-R1",
+      "target": "bitebase-intelligence-v2",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "BiteBase-Intelligence-R1",
+      "target": "enhancement-bitebase-intelligence",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "beta-bitebase-app-r1",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-backend-express",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-intelligence",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-intelligence-v2",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "enhancement-bitebase-intelligence",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-backend-express",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-intelligence",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "bitebase-intelligence-v2",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "enhancement-bitebase-intelligence",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "bitebase-intelligence",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "bitebase-intelligence-v2",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "enhancement-bitebase-intelligence",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "bitebase-intelligence",
+      "target": "bitebase-intelligence-v2",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "bitebase-intelligence",
+      "target": "enhancement-bitebase-intelligence",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "bitebase-intelligence-v2",
+      "target": "enhancement-bitebase-intelligence",
+      "type": "same_category",
+      "weight": 2,
+      "label": "intelligence"
+    },
+    {
+      "source": "Bitebase-Agentic-AI-Infrastructure",
+      "target": "agentic-ai-agent.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "Bitebase-Agentic-AI-Infrastructure",
+      "target": "agentic-workflows.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "Bitebase-Agentic-AI-Infrastructure",
+      "target": "bitebase-agent-",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "Bitebase-Agentic-AI-Infrastructure",
+      "target": "bitebase-agentics-ai",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "Bitebase-Agentic-AI-Infrastructure",
+      "target": "bitebase-ai-agents",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "Bitebase-Agentic-AI-Infrastructure",
+      "target": "bitebase-coagents",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "Bitebase-Agentic-AI-Infrastructure",
+      "target": "enhancement-bitebase-ai",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "agentic-ai-agent.bitebase.app",
+      "target": "agentic-workflows.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "agentic-ai-agent.bitebase.app",
+      "target": "bitebase-agent-",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "agentic-ai-agent.bitebase.app",
+      "target": "bitebase-agentics-ai",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "agentic-ai-agent.bitebase.app",
+      "target": "bitebase-ai-agents",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "agentic-ai-agent.bitebase.app",
+      "target": "bitebase-coagents",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "agentic-ai-agent.bitebase.app",
+      "target": "enhancement-bitebase-ai",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "agentic-workflows.bitebase.app",
+      "target": "bitebase-agent-",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "agentic-workflows.bitebase.app",
+      "target": "bitebase-agentics-ai",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "agentic-workflows.bitebase.app",
+      "target": "bitebase-ai-agents",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "agentic-workflows.bitebase.app",
+      "target": "bitebase-coagents",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "agentic-workflows.bitebase.app",
+      "target": "enhancement-bitebase-ai",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "bitebase-agentics-ai",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "bitebase-ai-agents",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "bitebase-coagents",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "bitebase-agent-",
+      "target": "enhancement-bitebase-ai",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "bitebase-ai-agents",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "bitebase-coagents",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "bitebase-agentics-ai",
+      "target": "enhancement-bitebase-ai",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "bitebase-ai-agents",
+      "target": "bitebase-coagents",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "bitebase-ai-agents",
+      "target": "enhancement-bitebase-ai",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "bitebase-coagents",
+      "target": "enhancement-bitebase-ai",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ai-agent"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "bitebase-beta-app-r1",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "bitebase-prototype.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "prelunch-bitebase-app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "prelunch.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "beta-bitebase",
+      "target": "prototype.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "bitebase-beta-app-r1",
+      "target": "bitebase-prototype.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "bitebase-beta-app-r1",
+      "target": "prelunch-bitebase-app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "bitebase-beta-app-r1",
+      "target": "prelunch.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "bitebase-beta-app-r1",
+      "target": "prototype.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "bitebase-prototype.app",
+      "target": "prelunch-bitebase-app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "bitebase-prototype.app",
+      "target": "prelunch.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "bitebase-prototype.app",
+      "target": "prototype.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "prelunch-bitebase-app",
+      "target": "prelunch.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "prelunch-bitebase-app",
+      "target": "prototype.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "prelunch.bitebase.app",
+      "target": "prototype.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "prototype"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "bitebase-v2",
+      "type": "same_category",
+      "weight": 2,
+      "label": "core"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "bolt-new.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "core"
+    },
+    {
+      "source": "bitebase-v2",
+      "target": "bolt-new.bitebase.app",
+      "type": "same_category",
+      "weight": 2,
+      "label": "core"
+    },
+    {
+      "source": "bitebase-ai-workspace",
+      "target": "bitebase-workspace.coder",
+      "type": "same_category",
+      "weight": 2,
+      "label": "workspace"
+    },
+    {
+      "source": "bitebase-ui",
+      "target": "style-guide.bitebase.github.io",
+      "type": "same_category",
+      "weight": 2,
+      "label": "ui-library"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "bitebase-ai",
+      "type": "serves",
+      "weight": 5,
+      "label": "REST API"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "bitebase-v2",
+      "type": "serves",
+      "weight": 5,
+      "label": "REST API"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "enhancement-bitebase-ai",
+      "type": "serves",
+      "weight": 4,
+      "label": "REST API"
+    },
+    {
+      "source": "bitebase-backend-express",
+      "target": "bitebase-agentics-ai",
+      "type": "serves",
+      "weight": 4,
+      "label": "REST API"
+    },
+    {
+      "source": "bitebase-intelligence",
+      "target": "bitebase-intelligence-v2",
+      "type": "evolved_to",
+      "weight": 5,
+      "label": "v1\u2192v2"
+    },
+    {
+      "source": "BiteBase-Intelligence-R1",
+      "target": "bitebase-intelligence-v2",
+      "type": "evolved_to",
+      "weight": 4,
+      "label": "R1\u2192v2"
+    },
+    {
+      "source": "enhancement-bitebase-intelligence",
+      "target": "bitebase-intelligence-v2",
+      "type": "enhances",
+      "weight": 4,
+      "label": "enhancement"
+    },
+    {
+      "source": "bitebase-ai-agents",
+      "target": "agentic-ai-agent.bitebase.app",
+      "type": "deploys_as",
+      "weight": 4,
+      "label": "Python agent"
+    },
+    {
+      "source": "Bitebase-Agentic-AI-Infrastructure",
+      "target": "bitebase-agentics-ai",
+      "type": "infra_for",
+      "weight": 5,
+      "label": "CopilotKit infra"
+    },
+    {
+      "source": "Bitebase-Agentic-AI-Infrastructure",
+      "target": "bitebase-coagents",
+      "type": "infra_for",
+      "weight": 5,
+      "label": "CoAgents infra"
+    },
+    {
+      "source": "bitebase-ai",
+      "target": "bitebase-v2",
+      "type": "evolved_to",
+      "weight": 5,
+      "label": "core\u2192v2"
+    },
+    {
+      "source": "enhancement-bitebase-ai",
+      "target": "bitebase-v2",
+      "type": "merged_into",
+      "weight": 4,
+      "label": "enhancements\u2192v2"
+    },
+    {
+      "source": "prelunch-bitebase-app",
+      "target": "beta-bitebase-app",
+      "type": "evolved_to",
+      "weight": 3,
+      "label": "prelaunch\u2192beta"
+    },
+    {
+      "source": "beta-bitebase-app",
+      "target": "bitebase-v2",
+      "type": "evolved_to",
+      "weight": 4,
+      "label": "beta\u2192v2"
+    },
+    {
+      "source": "bitebase-prototype.app",
+      "target": "prototype.bitebase.app",
+      "type": "variant_of",
+      "weight": 3,
+      "label": "prototype variants"
+    },
+    {
+      "source": "beta-bitebase-app-r1",
+      "target": "beta-bitebase-app",
+      "type": "iteration_of",
+      "weight": 4,
+      "label": "r1 iteration"
+    },
+    {
+      "source": "bitebase-beta-app-r1",
+      "target": "beta-bitebase-app",
+      "type": "iteration_of",
+      "weight": 3,
+      "label": "beta r1"
+    },
+    {
+      "source": "mcp-server-bitebase-app",
+      "target": "bitebase-v2",
+      "type": "extends",
+      "weight": 5,
+      "label": "MCP protocol"
+    },
+    {
+      "source": "mcp-server-bitebase-app",
+      "target": "enhancement-bitebase-ai",
+      "type": "extends",
+      "weight": 4,
+      "label": "MCP protocol"
+    },
+    {
+      "source": "_authenticationAPI.BiteBase.app",
+      "target": "bitebase-backend-express",
+      "type": "auth_for",
+      "weight": 5,
+      "label": "auth service"
+    },
+    {
+      "source": "_authenticationAPI.BiteBase.app",
+      "target": "bitebase-ai",
+      "type": "auth_for",
+      "weight": 4,
+      "label": "auth service"
+    },
+    {
+      "source": "bitebase-ui",
+      "target": "bitebase-v2",
+      "type": "consumed_by",
+      "weight": 4,
+      "label": "UI components"
+    },
+    {
+      "source": "bitebase-ui",
+      "target": "enhancement-bitebase-ai",
+      "type": "consumed_by",
+      "weight": 3,
+      "label": "UI components"
+    },
+    {
+      "source": "style-guide.bitebase.github.io",
+      "target": "bitebase-ui",
+      "type": "guides",
+      "weight": 3,
+      "label": "style guide"
+    },
+    {
+      "source": "bitebase-geospatial-saas",
+      "target": "bitebase-ai",
+      "type": "geo_layer_for",
+      "weight": 4,
+      "label": "Mapbox/Geo"
+    },
+    {
+      "source": "bitebase-geospatial-saas",
+      "target": "bitebase-v2",
+      "type": "geo_layer_for",
+      "weight": 4,
+      "label": "Mapbox/Geo"
+    },
+    {
+      "source": "bitebase-orchestration-design",
+      "target": "bitebase-v2",
+      "type": "orchestrates",
+      "weight": 3,
+      "label": "workflow design"
+    },
+    {
+      "source": "agentic-workflows.bitebase.app",
+      "target": "bitebase-orchestration-design",
+      "type": "implements",
+      "weight": 4,
+      "label": "workflow impl"
+    },
+    {
+      "source": "bitebase-workspace.coder",
+      "target": "bitebase-ai-workspace",
+      "type": "config_for",
+      "weight": 3,
+      "label": "coder config"
+    },
+    {
+      "source": "llm_wiki",
+      "target": "bitebase-ai",
+      "type": "knowledge_for",
+      "weight": 3,
+      "label": "LLM wiki knowledge"
+    },
+    {
+      "source": "llm_wiki",
+      "target": "bitebase-v2",
+      "type": "knowledge_for",
+      "weight": 3,
+      "label": "LLM wiki knowledge"
+    },
+    {
+      "source": "bolt-new.bitebase.app",
+      "target": "bitebase-prototype.app",
+      "type": "generated_from",
+      "weight": 2,
+      "label": "bolt.new gen"
+    }
+  ],
+  "clusters": {
+    "Core Platform": {
+      "color": "#3B82F6",
+      "repos": [
+        "bitebase-ai",
+        "bitebase-v2",
+        "enhancement-bitebase-ai",
+        "bitebase-backend-express",
+        "_authenticationAPI.BiteBase.app"
+      ],
+      "description": "Main platform \u2014 restaurant discovery, AI copilot, backend API, auth"
+    },
+    "Intelligence": {
+      "color": "#8B5CF6",
+      "repos": [
+        "bitebase-intelligence",
+        "bitebase-intelligence-v2",
+        "BiteBase-Intelligence-R1",
+        "enhancement-bitebase-intelligence",
+        "beta-bitebase-app",
+        "beta-bitebase-app-r1",
+        "bitebase-beta-app-r1"
+      ],
+      "description": "Market intelligence dashboards, analytics, and insights"
+    },
+    "AI Agents": {
+      "color": "#10B981",
+      "repos": [
+        "bitebase-agent-",
+        "bitebase-ai-agents",
+        "Bitebase-Agentic-AI-Infrastructure",
+        "bitebase-coagents",
+        "agentic-ai-agent.bitebase.app",
+        "agentic-workflows.bitebase.app",
+        "bitebase-agentics-ai"
+      ],
+      "description": "Autonomous AI agents, CopilotKit infrastructure, agentic workflows"
+    },
+    "Geospatial": {
+      "color": "#F59E0B",
+      "repos": [
+        "bitebase-geospatial-saas"
+      ],
+      "description": "Map-based restaurant discovery, geospatial analytics"
+    },
+    "Prototypes & Iterations": {
+      "color": "#EF4444",
+      "repos": [
+        "prelunch-bitebase-app",
+        "prelunch.bitebase.app",
+        "bitebase-prototype.app",
+        "prototype.bitebase.app",
+        "beta-bitebase",
+        "bolt-new.bitebase.app"
+      ],
+      "description": "Early prototypes, pre-launch, and beta iterations"
+    },
+    "UI & Design": {
+      "color": "#EC4899",
+      "repos": [
+        "bitebase-ui",
+        "style-guide.bitebase.github.io"
+      ],
+      "description": "Shared component library, style guide, design system"
+    },
+    "Infrastructure": {
+      "color": "#6366F1",
+      "repos": [
+        "bitebase-orchestration-design",
+        "bitebase-workspace.coder",
+        "bitebase-ai-workspace",
+        "mcp-server-bitebase-app"
+      ],
+      "description": "Orchestration, workspace config, MCP server, dev tooling"
+    },
+    "Knowledge Base": {
+      "color": "#14B8A6",
+      "repos": [
+        "llm_wiki"
+      ],
+      "description": "LLM Wiki \u2014 self-building personal knowledge base with graph visualization"
+    }
+  },
+  "technology_map": {
+    "CopilotKit": [
+      "Bitebase-Agentic-AI-Infrastructure",
+      "bitebase-v2"
+    ],
+    "LangChain": [
+      "agentic-ai-agent.bitebase.app",
+      "bitebase-v2",
+      "enhancement-bitebase-ai"
+    ],
+    "OpenAI": [
+      "agentic-ai-agent.bitebase.app",
+      "bitebase-backend-express",
+      "bitebase-v2",
+      "enhancement-bitebase-ai",
+      "prototype.bitebase.app"
+    ],
+    "Pandas": [
+      "agentic-ai-agent.bitebase.app"
+    ],
+    "Next.js": [
+      "beta-bitebase",
+      "beta-bitebase-app",
+      "beta-bitebase-app-r1",
+      "bitebase-agentics-ai",
+      "bitebase-ai",
+      "bitebase-ai-workspace",
+      "bitebase-intelligence-v2",
+      "bitebase-v2",
+      "enhancement-bitebase-ai",
+      "llm_wiki",
+      "prototype.bitebase.app"
+    ],
+    "Mapbox": [
+      "beta-bitebase",
+      "beta-bitebase-app",
+      "beta-bitebase-app-r1",
+      "bitebase-agentics-ai",
+      "bitebase-ai",
+      "bitebase-backend-express",
+      "bitebase-geospatial-saas",
+      "bitebase-intelligence",
+      "enhancement-bitebase-ai"
+    ],
+    "Turborepo": [
+      "beta-bitebase",
+      "bitebase-geospatial-saas",
+      "bitebase-intelligence"
+    ],
+    "React": [
+      "beta-bitebase-app",
+      "beta-bitebase-app-r1",
+      "bitebase-agent-",
+      "bitebase-agentics-ai",
+      "bitebase-ai",
+      "bitebase-ai-workspace",
+      "bitebase-intelligence-v2",
+      "bitebase-prototype.app",
+      "bitebase-v2",
+      "enhancement-bitebase-ai",
+      "llm_wiki",
+      "prototype.bitebase.app"
+    ],
+    "Tailwind CSS": [
+      "beta-bitebase-app",
+      "beta-bitebase-app-r1",
+      "bitebase-agentics-ai",
+      "bitebase-ai",
+      "bitebase-ai-workspace",
+      "bitebase-intelligence-v2",
+      "bitebase-prototype.app",
+      "bitebase-v2",
+      "enhancement-bitebase-ai",
+      "llm_wiki",
+      "prototype.bitebase.app"
+    ],
+    "Radix UI": [
+      "beta-bitebase-app",
+      "beta-bitebase-app-r1",
+      "bitebase-agentics-ai",
+      "bitebase-ai",
+      "bitebase-ai-workspace",
+      "bitebase-intelligence-v2",
+      "bitebase-prototype.app",
+      "bitebase-v2",
+      "enhancement-bitebase-ai",
+      "prototype.bitebase.app"
+    ],
+    "Leaflet": [
+      "beta-bitebase-app",
+      "bitebase-prototype.app"
+    ],
+    "D3.js": [
+      "beta-bitebase-app",
+      "beta-bitebase-app-r1"
+    ],
+    "Recharts": [
+      "beta-bitebase-app",
+      "beta-bitebase-app-r1",
+      "bitebase-agentics-ai",
+      "bitebase-ai-workspace",
+      "bitebase-prototype.app",
+      "bitebase-v2",
+      "prototype.bitebase.app"
+    ],
+    "Zustand": [
+      "beta-bitebase-app",
+      "bitebase-agentics-ai",
+      "bitebase-ai",
+      "llm_wiki"
+    ],
+    "TanStack": [
+      "beta-bitebase-app",
+      "beta-bitebase-app-r1",
+      "bitebase-v2"
+    ],
+    "Vite": [
+      "bitebase-agent-",
+      "bitebase-prototype.app",
+      "llm_wiki"
+    ],
+    "Prisma": [
+      "bitebase-ai",
+      "enhancement-bitebase-ai",
+      "prototype.bitebase.app"
+    ],
+    "Supabase": [
+      "bitebase-ai",
+      "bitebase-intelligence-v2",
+      "bitebase-prototype.app",
+      "enhancement-bitebase-ai"
+    ],
+    "PostgreSQL": [
+      "bitebase-ai",
+      "bitebase-ai-workspace",
+      "bitebase-backend-express",
+      "enhancement-bitebase-ai",
+      "prototype.bitebase.app"
+    ],
+    "Express": [
+      "bitebase-ai-workspace",
+      "bitebase-backend-express",
+      "bitebase-v2"
+    ],
+    "Redis": [
+      "bitebase-ai-workspace",
+      "bitebase-backend-express"
+    ],
+    "Drizzle ORM": [
+      "bitebase-v2",
+      "prototype.bitebase.app"
+    ],
+    "shadcn/ui": [
+      "llm_wiki"
+    ],
+    "Sigma.js": [
+      "llm_wiki"
+    ],
+    "Tauri": [
+      "llm_wiki"
+    ]
+  },
+  "metadata": {
+    "total_repos": 33,
+    "total_edges": 206,
+    "total_clusters": 8,
+    "total_technologies": 25
+  }
+}
